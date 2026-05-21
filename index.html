@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratório de DNA - Desafio Genético</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Tela Inicial -->
+        <div id="start-screen" class="screen active">
+            <div class="lab-background"></div>
+            <div class="overlay"></div>
+            <div class="start-content">
+                <h1>Laboratório de DNA</h1>
+                <p class="subtitle">Desafio Genético Profissional</p>
+                <div class="menu-buttons">
+                    <button onclick="game.showPlayerNameModal()">Iniciar Jogo</button>
+                    <button onclick="game.showScreen('ranking-screen')">Ranking Global</button>
+                    <button onclick="game.showScreen('training-screen')">Modo Treino</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de Nome do Jogador -->
+        <div id="player-name-modal" class="modal">
+            <div class="modal-content">
+                <h2>Bem-vindo ao Laboratório</h2>
+                <p>Por favor, insira seu nome para começar:</p>
+                <input type="text" id="player-name-input" placeholder="Seu nome aqui..." maxlength="30">
+                <button onclick="game.startGameWithName()">Começar</button>
+            </div>
+        </div>
+
+        <!-- Tela de Cutscene (Dra. Aura Kizola) -->
+        <div id="cutscene-screen" class="screen">
+            <div class="cutscene-container">
+                <div class="cutscene-background"></div>
+                <div class="character-panel">
+                    <img src="assets/images/dra-aura-kizola.png" alt="Dra. Aura Kizola" class="character-image">
+                    <div class="dialogue-box">
+                        <h3>Dra. Aura Kizola</h3>
+                        <p id="dialogue-text">Bem-vindo ao laboratório!</p>
+                        <button id="skip-dialogue-btn">Avançar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tela de Jogo -->
+        <div id="game-screen" class="screen">
+            <div class="game-background"></div>
+            <div class="hud">
+                <div class="stat">
+                    <span class="label">Jogador:</span>
+                    <span id="player-name-display">-</span>
+                </div>
+                <div class="stat">
+                    <span class="label">Nível:</span>
+                    <span id="level-display">1</span>
+                </div>
+                <div class="stat">
+                    <span class="label">Tempo:</span>
+                    <span id="timer-display">60</span>s
+                </div>
+                <div class="stat">
+                    <span class="label">Vidas:</span>
+                    <span id="lives-display">3</span>
+                </div>
+                <div class="stat">
+                    <span class="label">Pontos:</span>
+                    <span id="score-display">0</span>
+                </div>
+            </div>
+            <div id="level-instruction"></div>
+            <div id="dna-board">
+                <div id="dna-strand-left" class="strand"></div>
+                <div id="dna-strand-right" class="strand"></div>
+            </div>
+            <div id="base-palette">
+                <div class="base-item" draggable="true" data-base="A" style="background-color: #4CAF50;">A</div>
+                <div class="base-item" draggable="true" data-base="T" style="background-color: #F44336;">T</div>
+                <div class="base-item" draggable="true" data-base="C" style="background-color: #2196F3;">C</div>
+                <div class="base-item" draggable="true" data-base="G" style="background-color: #FFEB3B; color: black;">G</div>
+                <div class="base-item hidden" draggable="true" data-base="U" style="background-color: #9C27B0;">U</div>
+            </div>
+        </div>
+
+        <!-- Tela de Feedback -->
+        <div id="feedback-screen" class="screen">
+            <div class="feedback-content">
+                <h2 id="feedback-title">Excelente Trabalho!</h2>
+                <p id="feedback-text"></p>
+                <div id="scientific-fact"></div>
+                <button id="next-level-btn">Próximo Nível</button>
+            </div>
+        </div>
+
+        <!-- Tela de Ranking -->
+        <div id="ranking-screen" class="screen">
+            <div class="ranking-content">
+                <h2>Ranking Global</h2>
+                <div id="ranking-list" class="ranking-table">
+                    <!-- Preenchido via JS -->
+                </div>
+                <button onclick="game.showScreen('start-screen')" class="back-btn">Voltar</button>
+            </div>
+        </div>
+
+        <!-- Tela de Modo Treino -->
+        <div id="training-screen" class="screen">
+            <div class="training-content">
+                <h2>Modo Treino</h2>
+                <p>Pratique sem pressão de tempo ou vidas!</p>
+                <div class="menu-buttons">
+                    <button onclick="game.startLevel(1, true)">Nível 1: Bases</button>
+                    <button onclick="game.startLevel(2, true)">Nível 2: Replicação</button>
+                    <button onclick="game.startLevel(3, true)">Nível 3: Mutação</button>
+                    <button onclick="game.startLevel(4, true)">Nível 4: RNA</button>
+                    <button onclick="game.startLevel(5, true)">Nível 5: Proteínas</button>
+                </div>
+                <button onclick="game.showScreen('start-screen')" class="back-btn">Voltar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Áudio -->
+    <audio id="background-music" src="assets/sounds/background-music.mp3" loop></audio>
+    <audio id="correct-sound" src="assets/sounds/correct-sound.mp3"></audio>
+    <audio id="error-sound" src="assets/sounds/error-sound.mp3"></audio>
+    <audio id="level-complete-sound" src="assets/sounds/level-complete.mp3"></audio>
+
+    <script src="game.js"></script>
+</body>
+</html>
